@@ -240,12 +240,19 @@
       .footer-inner{grid-template-columns:1fr 1fr}
     }
     @media(max-width:768px){
-      .nav-links{display:none;position:fixed;top:72px;left:0;right:0;bottom:0;background:rgba(10,10,11,0.97);flex-direction:column;align-items:center;justify-content:center;gap:32px;backdrop-filter:blur(20px)}
+      .nav-links{display:none;position:fixed;top:72px;left:0;right:0;bottom:0;background:rgba(10,10,11,0.98);flex-direction:column;align-items:center;justify-content:center;gap:24px;backdrop-filter:blur(20px);z-index:999;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:slideDown 0.3s cubic-bezier(0.16,1,0.3,1)}
+      @keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
       .nav-links.open{display:flex}
-      .nav-links a{font-size:18px}
+      .nav-links a{font-size:16px;font-weight:600;padding:12px 24px;border-radius:8px;transition:all 0.2s;display:block}
+      .nav-links a:hover{background:rgba(99,102,241,0.1)}
+      .nav-links a:active{background:rgba(99,102,241,0.2)}
       .nav-links a::after{display:none}
       .nav-cta-desktop{display:none}
-      .menu-toggle{display:block}
+      .menu-toggle{display:flex;flex-direction:column;z-index:1001;padding:12px}
+      .menu-toggle span{transition:all 0.3s cubic-bezier(0.16,1,0.3,1)}
+      .menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(10px,10px)}
+      .menu-toggle.active span:nth-child(2){opacity:0}
+      .menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
       .page-hero{padding:130px 0 60px}
       section{padding:80px 0}
       .form-row{grid-template-columns:1fr}
