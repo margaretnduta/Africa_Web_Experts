@@ -1548,19 +1548,22 @@
             <div>
               <div
                 style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px;">
-                <span>LCP</span><span style="color:var(--teal)">&lt; 1.2s</span></div>
+                <span>LCP</span><span style="color:var(--teal)">&lt; 1.2s</span>
+              </div>
               <div class="visual-mock-bar w90"></div>
             </div>
             <div>
               <div
                 style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px;">
-                <span>FID</span><span style="color:var(--teal)">&lt; 50ms</span></div>
+                <span>FID</span><span style="color:var(--teal)">&lt; 50ms</span>
+              </div>
               <div class="visual-mock-bar w80"></div>
             </div>
             <div>
               <div
                 style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:4px;">
-                <span>CLS</span><span style="color:var(--teal)">&lt; 0.05</span></div>
+                <span>CLS</span><span style="color:var(--teal)">&lt; 0.05</span>
+              </div>
               <div class="visual-mock-bar w60"></div>
             </div>
           </div>
@@ -2066,23 +2069,53 @@
 
   <!-- ─── SCRIPTS ─── -->
   <script>
-    // Mobile menu
+    // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
-    menuToggle.addEventListener('click', () => {
+
+    // Toggle menu
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       navLinks.classList.toggle('open');
-      menuToggle.classList.toggle('open');
+      menuToggle.classList.toggle('active');
       const isOpen = navLinks.classList.contains('open');
       menuToggle.setAttribute('aria-expanded', isOpen);
+
+      // Prevent body scroll when menu is open
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
+
+    // Close menu when clicking on a link
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
-        menuToggle.classList.remove('open');
+        menuToggle.classList.remove('active');
         menuToggle.setAttribute('aria-expanded', false);
         document.body.style.overflow = '';
       });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const isClickInsideMenu = navLinks.contains(e.target);
+      const isClickOnToggle = menuToggle.contains(e.target);
+
+      if (!isClickInsideMenu && !isClickOnToggle && navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', false);
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Close menu when pressing Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', false);
+        document.body.style.overflow = '';
+      }
     });
 
     // Scroll effects
