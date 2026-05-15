@@ -252,4 +252,4 @@ This codebase is proprietary. Unauthorized reproduction, distribution, or use of
 
 ---
 
-*Designed & built with AI.*
+*Designed & built with AI*
